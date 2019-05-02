@@ -1,0 +1,19 @@
+---
+title: "Lab 14 (FINAL LAB)"
+author: "Adam Hayes, Erin Omyer, Richard Park, Jasmine Sanchez"
+date: "5/1/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(modelr)
+options(na.action = na.warn)
+income <- read.csv("state_income.csv")
+education <- read.csv("states_all.csv")
+```
+
