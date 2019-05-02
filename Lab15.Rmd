@@ -1,5 +1,5 @@
 ---
-title: "Lab 14 (FINAL LAB)"
+title: "Lab 15 (FINAL LAB)"
 author: "Adam Hayes, Erin Omyer, Richard Park, Jasmine Sanchez"
 date: "5/1/2019"
 output: html_document
@@ -17,3 +17,17 @@ income <- read.csv("state_income.csv")
 education <- read.csv("states_all.csv")
 ```
 
+###How does state income impact state education overall?
+Our team, the Alge-Bros and Inte-Girls, was recently hired by the Secretary of Education, who will be our domain expert for this project. The Secretary of Education has asked us to analyze how state income affects education overall. 
+
+
+###Importance
+This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.
+
+###Our Data
+
+
+###Conclusion
+
+
+###Recommendations
