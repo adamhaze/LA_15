@@ -19,7 +19,9 @@ Our team, the Alge-Bros and Inte-Girls, was recently hired by the Secretary of E
 This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.
 
 ###Our Data
+https://www.kaggle.com/noriuk/us-education-datasets-unification-project
 
+The data our team decided to use came from the kaggle site posted above. We chose this dataset primarily because it gives insightful and relevant data with regards to nationwide education. More importantly, it serves as an economic underpinning so we can analyze different statistics about how effectively money is being spent on education. This dataset will have extensive value because it breaks each component down to the state-level, allowing us to go more in depth with state incomes instead of a national income.
 
 ###Conclusion
 
