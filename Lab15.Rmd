@@ -71,6 +71,10 @@ dataAdam <- education %>%
 
 ####Does the total revenue for education follow the year? (i.e Does the year matter?)
 
+####Importance: From 1993 to 2016, the amount of money circulating in society has grown drastically. Based on this, it is important to know when tidying and organizing data if specific labels matter.
+
+####New tools used: permutation test
+
 ```{r}
 educationERIN <- read.csv("states_all.csv") %>%
   select(-PRIMARY_KEY)
