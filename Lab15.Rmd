@@ -23,11 +23,7 @@ https://www.kaggle.com/noriuk/us-education-datasets-unification-project
 
 The data our team decided to use came from the kaggle site posted above. We chose this dataset primarily because it gives insightful and relevant data with regards to nationwide education. More importantly, it serves as an economic underpinning so we can analyze different statistics about how effectively money is being spent on education. This dataset will have extensive value because it breaks each component down to the state-level, allowing us to go more in depth with state incomes instead of a national income.
 
-###Conclusion
-
-First and foremost, our team has discovered that the mean expenditure used on instruction for education has been steadily increasing over the years. This means that on average, states nationwide have slowly been spending more money on teachers and other instructors, which in turn, has lead to an increase in student enrollment (which was expected). This information can be useful to the Secretary of Education because the more we pay/spend on teachers, the more students are expected to be enrolled in school.
-
-###Recommendations
+###Our Team's Findings
 
 ```{r}
 library(tidyverse)
@@ -59,14 +55,62 @@ ggplot(education, aes(YEAR))+
 
 ```
 
+###Conclusion
+First and foremost, our team discovered that overall, enrollment numbers for kids younger than college age tend to increase with the increase of state revenue.  We found that the states that consistently have lower revenues tend to have a much harder time maintaining their enrollment numbers.  We also discovered that the mean expenditure used on instruction for education has been steadily increasing over the years. This means that on average, states nationwide have slowly been spending more money on teachers and other instructors, which in turn, has lead to an increase in student enrollment (which was expected). 
+
+###Recommendations
+Our findings suggest that we should focus our government resources towards states with consitently lower revenue, because these are the states struggling to maintain enrollment numbers year to year.  We must try to find a way to help states with less revenue spend their money more efficiently on education, so that their enrollment numbers will continue to increase, rather than decrease. Our findings about state expenditures on education can be useful to the Secretary of Education because the more we pay/spend on teachers, the more students are expected to be enrolled in school.
+
+
+
 
 ###Adam's Findings
 
 ```{r}
-dataAdam <- education %>%
-  filter(YEAR==2013)%>%
-  arrange(desc(TOTAL_REVENUE))
+dataAdamAll <- education %>%
+  group_by(STATE)%>%
+  filter( STATE == "CALIFORNIA" || STATE == "TEXAS"|| STATE == "NEW_YORK" || STATE == "FLORIDA" || STATE == "SOUTH_DAKOTA"||STATE == "NORTH_DAKOTA"||STATE == "WYOMING")
+
+
+dataAdamTOP <- education %>%
+  group_by(STATE)%>%
+  filter( STATE == "CALIFORNIA" || STATE == "TEXAS"|| STATE == "NEW_YORK" || STATE == "FLORIDA")
+ggplot(dataAdamTOP, aes(x = YEAR, y = TOTAL_REVENUE))+
+  geom_line(aes(color = STATE))+
+  ggtitle("Total Revenue By State for Highest earning states")
+
+model <- lm(ENROLL ~ YEAR*STATE, data = dataAdamTOP)
+grid <- dataAdamTOP %>%
+  data_grid(YEAR)
+grid <- grid %>%
+  add_predictions(model)
+ggplot(dataAdamTOP, aes(YEAR, color = STATE)) +
+  geom_point(aes(y = ENROLL)) +
+  geom_line(aes(y = pred), data = grid, size = 1)+
+  ggtitle("Model for Total Enrollment for States with Highest Revenue")
+
+dataAdamBottom <- education %>%
+  group_by(STATE)%>%
+  filter(STATE == "SOUTH_DAKOTA"||STATE == "NORTH_DAKOTA"||STATE == "WYOMING" )
+ggplot(dataAdamBottom, aes(x = YEAR, y = TOTAL_REVENUE))+
+  geom_line(aes(color = STATE))+
+  ggtitle("Total Revenue By State for Lowest earning states")
+
+
+model <- lm(ENROLL ~ YEAR*STATE, data = dataAdamBottom)
+grid2 <- dataAdamBottom %>%
+  data_grid(YEAR)
+grid2 <- grid2 %>%
+  add_predictions(model)
+ggplot(dataAdamBottom, aes(YEAR, color = STATE)) +
+  geom_point(aes(y = ENROLL)) +
+  geom_line(aes(y = pred), data = grid2, size = 1)+
+  ggtitle("Model for Total Enrollment for States with Lowest Revenue")
+
 ```
+
+####Comments
+The first two graphs represent the four states that consistently ranked top 4 in terms of state revenue from 1993 to 2016.  Similarly, the second two graphs represent the three states that ranked bottom 3.  What we can see from the graphs representing total state revenue over the years is that every state consistently increased their revenue from 1993 to 2016.  The difference then comes in the two modeled graphs, where we can see the graph representing the wealthiest states have strong positive trends of number of kids enrolled in school increasing, as revenue increases over the years.  The one outlier would be New York, where the number of enrolled kids has actually decreased.  On the other hand, the graph modeling the least wealthy states shows weak linear trends, but they tend to trend negative.  What this is showing is that the states generating much less revenue have a harder time maintaining consistent enrollment numbers.  This graph also shows that until about 2010, the enrollment numbers for these states were consistently decreasing.  However, around 2010 we can see a change in the trend towards increasing enrollment numbers which is a great thing for overall education if we can keep this trend going.
 
 ###Erin's Findings
 
@@ -241,7 +285,6 @@ percentilesRichard
 ####Comments
 The educational infrastructure in today's society has proven to be dynamic and adaptive. In the United States, there is more money being circulated than ever before, there are more kids being enrolled in school, and there are more ways states around the nation are paying their educational systems. I performed a two-sample permutation test with regards to the mean of instruction expenditure between the two years 2002 and 2015. From my graph above, the instructional revenue between years has slowly increased with minimal states with vast variations. Through the permutation test, I found a percentile difference to contain roughly 31.6 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at instructional revenue from 2002 to 2015.The difference between 2002 and 2015 for total revenue is large due to inflation of the economy. Therefore, in conclusion, the amount of money fluctuating in the states has increased, leading to more money being spent on instructors in the education system which ultimately helps the success of the students (which probably explains why more students are enrolled than ever before). 
 
-###Who Did What?
 
 ###Comparison to Lab 2
 Team:
@@ -256,4 +299,8 @@ Through this course, it has provided a different perspective on the studies of d
 
 Jasmine:
 
-Adam:
+Adam: Reflectin on my goal from the second lab of the semester, I think I have a much stronger understanding of how to utilize real world data with computer science.  I now am able to take real world data, interperet it, make predictions, and apply my new skills to create findings and conclusions.
+
+
+###Who Did What?
+Adam tidied the data and created a model and graph for the team section, and helped with conclusion and recommendation.  In his individual section he did exploratory data analysis on which states consistently generate the most revenue, and which generate the least.  He then compared these two groups in terms of school enrollment using data modeling, and graphs.
