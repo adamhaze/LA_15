@@ -25,6 +25,7 @@ The data our team decided to use came from the kaggle site posted above. We chos
 
 ###Conclusion
 
+First and foremost, our team has discovered that the mean expenditure used on instruction for education has been steadily increasing over the years. This means that on average, states nationwide have slowly been spending more money on teachers and other instructors, which in turn, has lead to an increase in student enrollment (which was expected). This information can be useful to the Secretary of Education because the more we pay/spend on teachers, the more students are expected to be enrolled in school.
 
 ###Recommendations
 
@@ -158,6 +159,87 @@ kable(percentiles_data1, caption = "The percentiles of difference in medians")
 ####Comments
 
 From 1993 to 2016, there has been a vast change in the way the education system functions in the United States. Not only have the number of students have increased, the number of teachers and the amount of money fluctuating in the system. We conducted a permutation test on the median total revenue for the year 1993 and 2016. From the graph above, the total revenue between years has tried to remain relatively the same with minimal states with vast variations. Through the permutation test, we found a percentile difference to contain roughly 0.3 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at total revenue from 1993 to 2016.The difference between 1993 and 2016 for total revenue is large due to the various changes society has taken over the recent years. The amount of money fluctuating in the U.S. has increased, leading to more money in the education system to help the success of the students. 
+
+
+###Richard's Findings
+
+####Does the instruction revenue for education coincide with the year? (i.e Does the year matter?)
+
+####Importance: From 2002 to 2015, money has inflated and there is now drastically more money circulating in society. Based on this, it is important to know when tidying and organizing data if specific labels matter.
+
+####New tools used: two-sample permutation test and quantiles
+
+```{r}
+dataRichard2002 <- education %>%
+  filter(YEAR == 2002) %>%
+  summarise(mean = mean(INSTRUCTION_EXPENDITURE))
+
+dataRichard2015 <- education %>%
+  filter(YEAR == 2015) %>%
+  summarise(mean = mean(INSTRUCTION_EXPENDITURE))
+
+Difference_In_Expenditure = dataRichard2015 - dataRichard2002
+Difference_In_Expenditure
+
+Education_group <- education %>%
+  filter(YEAR == 2002 | YEAR == 2015)
+
+#Two-Sample Permutation Test
+
+perm_mean <- function(perms = 1000, values, n1)
+{
+  # Create vector of zeroes of length "perms" to store
+  # permuted mean differnces
+  outputMean <- vector("double", perms)
+  
+  # Loop throught number of permutations
+  for (i in c(1:perms))
+  {
+    # Randomly separate vector "values" into disjoint 
+    # groups of size "n1" and "length(values) - n1" respectively
+    
+    vector1 <- sample(values, n1)
+    vector2 <- setdiff(values, vector1)
+    
+    # Compute the sample means for the two groups from 
+    # step 2
+    
+    firstMean <- mean(vector1)
+    secondMean <- mean(vector2)
+    
+    # Compute the difference in sample means, store the
+    # value in the vector from step 1
+    
+    meanDifference <- firstMean - secondMean
+    
+    outputMean[i] <- meanDifference
+  }
+  # Return new updated vector, created in step 1
+  
+  return(outputMean)
+}
+
+EducationMean <- perm_mean(1000, Education_group$INSTRUCTION_EXPENDITURE, 100)
+#realResult <- rnorm(result)
+hist(result, col = "green", main = "Difference of Means")
+
+duration = EducationMean
+quantile(duration, c(0.05, 0.95))
+
+ggplot()+
+  geom_histogram(aes(x=EducationMean), bins = 100,fill = "Red")+
+  geom_vline(xintercept = 250000)+
+  stat_bin(binwidth = 1000) +
+  labs(title = "Distribution of Difference in Means for 2002 and 2015 in Instruction Revenue")+
+  xlab("Difference")
+
+Richardeducation <- sum(EducationMean<250000)
+percentilesRichard <- Richardeducation/1000
+percentilesRichard
+```
+
+####Comments
+The educational infrastructure in today's society has proven to be dynamic and adaptive. In the United States, there is more money being circulated than ever before, there are more kids being enrolled in school, and there are more ways states around the nation are paying their educational systems. I performed a two-sample permutation test with regards to the mean of instruction expenditure between the two years 2002 and 2015. From my graph above, the instructional revenue between years has slowly increased with minimal states with vast variations. Through the permutation test, I found a percentile difference to contain roughly 31.6 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at instructional revenue from 2002 to 2015.The difference between 2002 and 2015 for total revenue is large due to inflation of the economy. Therefore, in conclusion, the amount of money fluctuating in the states has increased, leading to more money being spent on instructors in the education system which ultimately helps the success of the students (which probably explains why more students are enrolled than ever before). 
 
 ###Who Did What?
 
