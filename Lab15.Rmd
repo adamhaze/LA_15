@@ -13,24 +13,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(modelr)
 options(na.action = na.warn)
-income <- read.csv("state_income.csv")%>%
-  select(-Index)%>%
-  gather(`Y2002`:`Y2015`, key = "year", value = "income")%>%
-  separate(year, into = c("N","year"), sep = -4)%>%
-  select(-N)%>%
-  rename(STATE = "State", YEAR = "year")
-income$YEAR <- as.numeric(income$YEAR)
-income$STATE <- toupper(income$STATE)
 
 
 education <- read.csv("states_all.csv") %>%
-  select(-PRIMARY_KEY,-INSTRUCTION_EXPENDITURE,-SUPPORT_SERVICES_EXPENDITURE,-CAPITAL_OUTLAY_EXPENDITURE,-OTHER_EXPENDITURE)%>%
+  select(-PRIMARY_KEY)%>%
   filter(YEAR >= 2002 & YEAR <= 2015) 
+education <- education[!is.na(education$ENROLL),]
 
-combinedData <- education %>%
-  left_join(income,by = c("STATE", "YEAR"))
 
-combinedData <- combinedData[!is.na(combinedData$income), ]
 ```
 
 ###How does state income impact state education overall?
@@ -49,6 +39,8 @@ This is an important question to analyze because it will be a good indicator for
 ###Recommendations
 
 ```{r}
-
+dataAdam <- education %>%
+  filter(YEAR==2013)%>%
+  arrange(desc(TOTAL_REVENUE))
 ```
 
