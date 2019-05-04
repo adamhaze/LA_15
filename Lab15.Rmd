@@ -67,6 +67,94 @@ dataAdam <- education %>%
   arrange(desc(TOTAL_REVENUE))
 ```
 
+###Erin's Findings
+
+####Does the total revenue for education follow the year? (i.e Does the year matter?)
+
+```{r}
+educationERIN <- read.csv("states_all.csv") %>%
+  select(-PRIMARY_KEY)
+education <- education[!is.na(education$TOTAL_REVENUE),]
+
+enrolled <- education[!is.na(education$ENROLL),]
+
+dataErin <- education %>%
+  select(YEAR,TOTAL_REVENUE)
+
+median1993_E <- education %>%
+  filter(YEAR == 1993) %>%
+  summarise(median1993 = median(dataErin$TOTAL_REVENUE))
+
+median2016_E <- education %>%
+  filter(YEAR == 2016)%>%
+  summarise(median2016 = mean(dataErin$TOTAL_REVENUE))
+
+testgroup <- education %>%
+  filter(YEAR == 1993 || YEAR == 2016)
+
+perm_median <- function(perms = 1000, values, n1)
+{
+  # Create vector of zeroes of length "perms" to store
+  # permuted mean differnces
+  outputMedian <- c()
+  
+  # Loop throught number of permutations
+  for (i in c(1:perms))
+  {
+    # Randomly separate vector "values" into disjoint 
+    # groups of size "n1" and "length(values) - n1" respectively
+    
+    vector1 <- sample(values, n1)
+    n2 <- length(values)-n1
+    vector2 <- sample(values, n2)
+    
+    # Compute the sample means for the two groups from 
+    # step 2
+    
+    firstMedian <- median(vector1)
+    secondMedian <- median(vector2)
+    
+    # Compute the difference in sample means, store the
+    # value in the vector from step 1
+    
+    medianDifference <- firstMedian - secondMedian
+    
+    outputMedian[i] <- medianDifference
+  }
+  # Return new updated vector, created in step 1
+  
+  return(outputMedian)
+}
+
+revDifference <- median2016_E - median1993_E
+
+results <- perm_median(1000, dataErin$TOTAL_REVENUE, 1000)
+resultss <- abs(results)
+
+ggplot()+
+  geom_histogram(aes(x=resultss),fill = "pink")+
+  geom_vline(xintercept = 200000)+
+  stat_bin(binwidth = 300) +
+  labs(title = "Distribution of Difference in Medians for 1993 and 2016 in Total Revenue")+
+  xlab("Difference")
+
+resultERIN <- sum(resultss<200000)
+percentiles_data1 <- resultERIN/1000
+
+```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(revDifference, caption = "The actual difference between 1993 and 2016")
+```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(percentiles_data1, caption = "The percentiles of difference in medians")
+```
+  
+####Comments
+
+From 1993 to 2016, there has been a vast change in the way the education system functions in the United States. Not only have the number of students have increased, the number of teachers and the amount of money fluctuating in the system. We conducted a permutation test on the median total revenue for the year 1993 and 2016. From the graph above, the total revenue between years has tried to remain relatively the same with minimal states with vast variations. Through the permutation test, we found a percentile difference to contain roughly 0.3 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at total revenue from 1993 to 2016.The difference between 1993 and 2016 for total revenue is large due to the various changes society has taken over the recent years. The amount of money fluctuating in the U.S. has increased, leading to more money in the education system to help the success of the students. 
+
 ###Who Did What?
 
 ###Comparison to Lab 2
