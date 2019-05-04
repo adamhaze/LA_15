@@ -164,9 +164,13 @@ From 1993 to 2016, there has been a vast change in the way the education system 
 ###Comparison to Lab 2
 Team:
 
+When we first began our journey as Data Scientists, we set the goals of becoming an efficient group and perfect our R studio coding. Through each lab, we have become better each time, learning and exploring new topics in R studio. If we could go back in time, we would tell ourselves that the textbook is efficient in showing examples on methods to code. As well, we would want ot ask more questions when starting out the learning of R studio. 
+
 Richard:
 
 Erin:
+
+Through this course, it has provided a different perspective on the studies of data science as a whole. I came in to the class believing I was going to learn mathematical concepts with a dash of coding. But, it was instantly changed when I learned I had to download a completely different software to code in. While the class is tedious, it has allowed myself to have a different perspective on my future career ideas. If I could go back to the beginning of the semester, I would tell myself to practice more hands on examples outside of the book. While the book is thorough, I think it is easy to get caught up in the same terminology and overlook the overall meaning.
 
 Jasmine:
 
