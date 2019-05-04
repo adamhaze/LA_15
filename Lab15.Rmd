@@ -5,23 +5,11 @@ date: "5/1/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, }
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
-```{r}
-library(tidyverse)
-library(modelr)
-options(na.action = na.warn)
 
-
-education <- read.csv("states_all.csv") %>%
-  select(-PRIMARY_KEY)%>%
-  filter(YEAR >= 2002 & YEAR <= 2015) 
-education <- education[!is.na(education$ENROLL),]
-
-
-```
 
 ###How does state income impact state education overall?
 Our team, the Alge-Bros and Inte-Girls, was recently hired by the Secretary of Education, who will be our domain expert for this project. The Secretary of Education has asked us to analyze how state income affects education overall. 
@@ -39,8 +27,53 @@ This is an important question to analyze because it will be a good indicator for
 ###Recommendations
 
 ```{r}
+library(tidyverse)
+library(modelr)
+options(na.action = na.warn)
+
+
+education <- read.csv("states_all.csv") %>%
+  select(-PRIMARY_KEY)%>%
+  group_by(YEAR)
+education <- education[!is.na(education$ENROLL),]%>%
+  mutate(meanEnroll = mean(ENROLL),
+         meanRevenue = mean(TOTAL_REVENUE))
+mod <- lm(meanEnroll~YEAR*meanRevenue, data = education)
+grid <- education %>%
+  data_grid(meanRevenue)
+grid <- grid %>%
+  add_predictions(mod)
+
+ggplot(education, aes(x=YEAR, y = meanRevenue))+
+  geom_line()+
+  labs(title = "Average Revenue for all States by Year")
+
+ggplot(education, aes(YEAR))+
+  geom_point(aes(y = meanEnroll))+
+  geom_line(aes(y = pred),data = grid, size = 1)+
+  ggtitle("Model for Average # of Enrolled Students vs Yearly Revenue,\ncompared with Actual Values for all states by Year")
+  
+
+```
+
+
+###Adam's Findings
+
+```{r}
 dataAdam <- education %>%
   filter(YEAR==2013)%>%
   arrange(desc(TOTAL_REVENUE))
 ```
 
+###Who Did What?
+
+###Comparison to Lab 2
+Team:
+
+Richard:
+
+Erin:
+
+Jasmine:
+
+Adam:
