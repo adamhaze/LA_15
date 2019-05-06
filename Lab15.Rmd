@@ -11,12 +11,12 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 
 
-###How does state income impact state education overall?
+###How does state income impact state education(grades 12 and under) overall?
 Our team, the Alge-Bros and Inte-Girls, was recently hired by the Secretary of Education, who will be our domain expert for this project. The Secretary of Education has asked us to analyze how state income affects education overall. 
 
 
 ###Importance
-This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.
+This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.  Education is supposed to be equal opportunity for grade levels 12 and under, but if states with less money are not able to give as many of their youth an education as the states with the most money, then there is a problem.  We must find out how much state income actually impacts the state's school enrollment.
 
 ###Our Data
 https://www.kaggle.com/noriuk/us-education-datasets-unification-project
@@ -65,6 +65,12 @@ Our findings suggest that we should focus our government resources towards state
 
 
 ###Adam's Findings
+
+####Tools used: models
+
+####Importance:
+This is important because it can tell us if wealth is truly affecting how many kids relative to state population size, are getting an education.  If the states that generate the least revenue each year have significantly lower enrollment rates than the states generating the most revenue, then there is a problem because education should be equal opportunity until College.
+
 
 ```{r}
 dataAdamAll <- education %>%
@@ -265,7 +271,7 @@ perm_mean <- function(perms = 1000, values, n1)
 
 EducationMean <- perm_mean(1000, Education_group$INSTRUCTION_EXPENDITURE, 100)
 #realResult <- rnorm(result)
-hist(result, col = "green", main = "Difference of Means")
+hist(EducationMean, col = "green", main = "Difference of Means")
 
 duration = EducationMean
 quantile(duration, c(0.05, 0.95))
@@ -292,15 +298,11 @@ How does the percentage of student services expidentures allocated toward studen
 ####Why is it important?
 This is important to analyze within the education system because it is important to be aware of how these expenditures are supporting the needs of the students. Unfortunately, the majority of students who require extra support and assistance from schools, come from underrepresented communities. Therefore, in order to get a more accurate view of the effect that an increase in the Student Service Expenditures will have on student enrollment, I decided to focus directly on the state of California becuase they are one of the states with the most diverse population. 
 
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(echo = TRUE)
-
-```
 
 ```{r}
 
 library(tidyverse)
+install.packages("hexbin")
 library(hexbin)
 library(modelr)
 
@@ -363,9 +365,13 @@ Erin:
 
 Through this course, it has provided a different perspective on the studies of data science as a whole. I came in to the class believing I was going to learn mathematical concepts with a dash of coding. But, it was instantly changed when I learned I had to download a completely different software to code in. While the class is tedious, it has allowed myself to have a different perspective on my future career ideas. If I could go back to the beginning of the semester, I would tell myself to practice more hands on examples outside of the book. While the book is thorough, I think it is easy to get caught up in the same terminology and overlook the overall meaning.
 
-Jasmine:Throghout this course, we have been learning a different 'language' of code that I have not yet had any experience with. I am now able to read, clean, manipulate, and communicate data that I work with. I am able to focus on only the variables that I need as well as being able to then interpret that in various ways to make it easy for anyone to read. This course has taught me important ways that data is used and I can now apply those skills in a way that is beneficial.
+Jasmine:
 
-Adam: Reflectin on my goal from the second lab of the semester, I think I have a much stronger understanding of how to utilize real world data with computer science.  I now am able to take real world data, interperet it, make predictions, and apply my new skills to create findings and conclusions.
+Throghout this course, we have been learning a different 'language' of code that I have not yet had any experience with. I am now able to read, clean, manipulate, and communicate data that I work with. I am able to focus on only the variables that I need as well as being able to then interpret that in various ways to make it easy for anyone to read. This course has taught me important ways that data is used and I can now apply those skills in a way that is beneficial.
+
+Adam: 
+
+Reflectin on my goal from the second lab of the semester, I think I have a much stronger understanding of how to utilize real world data with computer science.  I now am able to take real world data, interperet it, make predictions, and apply my new skills to create findings and conclusions.
 
 
 ###Who Did What?
