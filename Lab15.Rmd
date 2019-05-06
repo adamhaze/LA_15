@@ -287,6 +287,14 @@ Richardeducation <- sum(EducationMean<250000)
 percentilesRichard <- Richardeducation/1000
 percentilesRichard
 ```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(Difference_In_Expenditure, caption = "The difference in means between 2002 and 2015")
+```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(percentilesRichard, caption = "The percentiles of difference in means")
+```
 
 ####Comments
 The educational infrastructure in today's society has proven to be dynamic and adaptive. In the United States, there is more money being circulated than ever before, there are more kids being enrolled in school, and there are more ways states around the nation are paying their educational systems. I performed a two-sample permutation test with regards to the mean of instruction expenditure between the two years 2002 and 2015. From my graph above, the instructional revenue between years has slowly increased with minimal states with vast variations. Through the permutation test, I found a percentile difference to contain roughly 31.6 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at instructional revenue from 2002 to 2015.The difference between 2002 and 2015 for total revenue is large due to inflation of the economy. Therefore, in conclusion, the amount of money fluctuating in the states has increased, leading to more money being spent on instructors in the education system which ultimately helps the success of the students (which probably explains why more students are enrolled than ever before). 
