@@ -302,8 +302,8 @@ This is important to analyze within the education system because it is important
 ```{r}
 
 library(tidyverse)
-install.packages("hexbin")
-library(hexbin)
+#install.packages("hexbin")
+#library(hexbin)
 library(modelr)
 
 options(na.action = na.warn)
