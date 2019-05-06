@@ -68,6 +68,8 @@ Our findings suggest that we should focus our government resources towards state
 
 ####Do the wealthiest states have better school enrollment numbers(grades 12 and under) than the states with the least wealth?
 
+####Tools used: models
+
 ####Importance:
 This is important because it can tell us if wealth is truly affecting how many kids relative to state population size, are getting an education.  If the states that generate the least revenue each year have significantly lower enrollment rates than the states generating the most revenue, then there is a problem because education should be equal opportunity until College.
 
