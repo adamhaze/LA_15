@@ -11,12 +11,12 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 
 
-###How does state income impact state education(grades 12 and under) overall?
+###How does state income impact state education overall?
 Our team, the Alge-Bros and Inte-Girls, was recently hired by the Secretary of Education, who will be our domain expert for this project. The Secretary of Education has asked us to analyze how state income affects education overall. 
 
 
 ###Importance
-This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.  Education is supposed to be equal opportunity for grade levels 12 and under, but if states with less money are not able to give as many of their youth an education as the states with the most money, then there is a problem.  We must find out how much state income actually impacts the state's school enrollment.
+This is an important question to analyze because it will be a good indicator for the Secretary of Education to see how effective money is being used for education at the state level.
 
 ###Our Data
 https://www.kaggle.com/noriuk/us-education-datasets-unification-project
@@ -59,19 +59,12 @@ ggplot(education, aes(YEAR))+
 First and foremost, our team discovered that overall, enrollment numbers for kids younger than college age tend to increase with the increase of state revenue.  We found that the states that consistently have lower revenues tend to have a much harder time maintaining their enrollment numbers.  We also discovered that the mean expenditure used on instruction for education has been steadily increasing over the years. This means that on average, states nationwide have slowly been spending more money on teachers and other instructors, which in turn, has lead to an increase in student enrollment (which was expected). 
 
 ###Recommendations
-Our findings suggest that we should focus our government resources towards states with consitently lower revenue, because these are the states struggling to maintain enrollment numbers year to year.  We must try to find a way to help states with less revenue spend their money more efficiently on education, so that their enrollment numbers will continue to increase, rather than decrease. Our findings about state expenditures on education can be useful to the Secretary of Education because the more we pay/spend on teachers, the more students are expected to be enrolled in school.
+Our findings suggest that we should focus our government resources towards states with consitently lower revenue, because these are the states struggling to maintain enrollment numbers year to year.  We must try to find a way to help states with less revenue spend their money more efficiently on education, so that their enrollment numbers will continue to increase, rather than decrease. Our findings about state expenditures on education can be useful to the Secretary of Education because the more we pay/spend on teachers, the more students are expected to be enrolled in school. This is also benefical becuase schools with more students, get more federal funding to support them, being able to see what trends cause these changes in enrollment, allows schools to pinpoint their needs and improve. 
 
 
 
 
 ###Adam's Findings
-
-####Do the wealthiest states have better school enrollment numbers(grades 12 and under) than the states with the least wealth?
-
-####Tools used: models
-
-####Importance:
-This is important because it can tell us if wealth is truly affecting how many kids relative to state population size, are getting an education.  If the states that generate the least revenue each year have significantly lower enrollment rates than the states generating the most revenue, then there is a problem because education should be equal opportunity until College.
 
 ```{r}
 dataAdamAll <- education %>%
@@ -292,11 +285,77 @@ percentilesRichard
 ####Comments
 The educational infrastructure in today's society has proven to be dynamic and adaptive. In the United States, there is more money being circulated than ever before, there are more kids being enrolled in school, and there are more ways states around the nation are paying their educational systems. I performed a two-sample permutation test with regards to the mean of instruction expenditure between the two years 2002 and 2015. From my graph above, the instructional revenue between years has slowly increased with minimal states with vast variations. Through the permutation test, I found a percentile difference to contain roughly 31.6 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at instructional revenue from 2002 to 2015.The difference between 2002 and 2015 for total revenue is large due to inflation of the economy. Therefore, in conclusion, the amount of money fluctuating in the states has increased, leading to more money being spent on instructors in the education system which ultimately helps the success of the students (which probably explains why more students are enrolled than ever before). 
 
+###Jasmine's Findings:
+####Individual Question: 
+How does the percentage of student services expidentures allocated toward students relate to the numer of students enrolled over time in California? 
+
+####Why is it important?
+This is important to analyze within the education system because it is important to be aware of how these expenditures are supporting the needs of the students. Unfortunately, the majority of students who require extra support and assistance from schools, come from underrepresented communities. Therefore, in order to get a more accurate view of the effect that an increase in the Student Service Expenditures will have on student enrollment, I decided to focus directly on the state of California becuase they are one of the states with the most diverse population. 
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r}
+
+library(tidyverse)
+library(hexbin)
+library(modelr)
+
+options(na.action = na.warn)
+
+education <- read.csv("states_all.csv")
+
+jasmine_data <- education %>%
+  
+  group_by(STATE)%>%
+  
+  filter( STATE == "CALIFORNIA")
+
+
+jasmine_data <- jasmine_data[!is.na(jasmine_data$SUPPORT_SERVICES_EXPENDITURE),]
+
+jasmine_data <- jasmine_data[!is.na(jasmine_data$TOTAL_EXPENDITURE),]
+
+jasmine_data <- jasmine_data[!is.na(jasmine_data$ENROLL),]
+
+
+percents <- jasmine_data%>%
+  
+  group_by(YEAR)%>%
+  
+  mutate(PERCENT= (SUPPORT_SERVICES_EXPENDITURE/TOTAL_EXPENDITURE))
+
+
+new <- percents%>%
+  
+  mutate(HELPED = PERCENT * ENROLL)
+
+
+ggplot(new, aes(YEAR, HELPED, colour = PERCENT)) + 
+  
+  geom_line()+
+  
+  geom_point()+ 
+  
+  geom_smooth(color = 'red')+ 
+  
+  labs(title = "Student Enrollment with increases of Studnet Service Expenditures" )
+
+
+  
+```
+
+####Comments: 
+The graph shown, displays the changes in the number of student enrolled in school in the state of California. The trend shows how the number of students, who utilize students services, who are enrolled in the school. The color, suggests how the percantage of the total number of enrolled students is changed and 
+
 
 ###Comparison to Lab 2
 Team:
 
-When we first began our journey as Data Scientists, we set the goals of becoming an efficient group and perfect our R studio coding. Through each lab, we have become better each time, learning and exploring new topics in R studio. If we could go back in time, we would tell ourselves that the textbook is efficient in showing examples on methods to code. As well, we would want ot ask more questions when starting out the learning of R studio. 
+When we first began our journey as Data Scientists, we set the goals of becoming an efficient group and perfect our R studio coding. Through each lab, we have become better each time, learning and exploring new topics in R studio. If we could go back in time, we would tell ourselves that the textbook is efficient in showing examples on methods to code.It is a great resource to understand why some functions work the way that they do. We would want to let our team know to ask more questions when starting out the learning of R studio as well as throuhgout the semester. 
 
 Richard:
 
@@ -304,12 +363,10 @@ Erin:
 
 Through this course, it has provided a different perspective on the studies of data science as a whole. I came in to the class believing I was going to learn mathematical concepts with a dash of coding. But, it was instantly changed when I learned I had to download a completely different software to code in. While the class is tedious, it has allowed myself to have a different perspective on my future career ideas. If I could go back to the beginning of the semester, I would tell myself to practice more hands on examples outside of the book. While the book is thorough, I think it is easy to get caught up in the same terminology and overlook the overall meaning.
 
-Jasmine:
+Jasmine:Throghout this course, we have been learning a different 'language' of code that I have not yet had any experience with. I am now able to read, clean, manipulate, and communicate data that I work with. I am able to focus on only the variables that I need as well as being able to then interpret that in various ways to make it easy for anyone to read. This course has taught me important ways that data is used and I can now apply those skills in a way that is beneficial.
 
-Adam: 
-
-Reflectin on my goal from the second lab of the semester, I think I have a much stronger understanding of how to utilize real world data with computer science.  I now am able to take real world data, interperet it, make predictions, and apply my new skills to create findings and conclusions.
+Adam: Reflectin on my goal from the second lab of the semester, I think I have a much stronger understanding of how to utilize real world data with computer science.  I now am able to take real world data, interperet it, make predictions, and apply my new skills to create findings and conclusions.
 
 
 ###Who Did What?
-Adam tidied the data and created a model and graph for the team section, and helped with conclusion and recommendation.  In his individual section he did exploratory data analysis on which states consistently generate the most revenue, and which generate the least.  He then compared these two groups in terms of school enrollment using data modeling, and graphs.
+Adam tidied the data and created a model and graph for the team section, and helped with conclusion and recommendation.  In his individual section he did exploratory data analysis on which states consistently generate the most revenue, and which generate the least.  He then compared these two groups in terms of school enrollment using data modeling, and graphs. Jasmine contributed to the team's recommendations and in her individual part, looked closesly at student services expenditures by year in the state of California. With that, she wanted to create a very diverse representative group of students and show how the increase in expenditures toward their support servies, has also shown an increase in student enrollment over the years. 
