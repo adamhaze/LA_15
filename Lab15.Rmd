@@ -66,7 +66,8 @@ Our findings suggest that we should focus our government resources towards state
 
 ###Adam's Findings
 
-####Tools used: models
+####Tools used: 
+-models
 
 ####Importance:
 This is important because it can tell us if wealth is truly affecting how many kids relative to state population size, are getting an education.  If the states that generate the least revenue each year have significantly lower enrollment rates than the states generating the most revenue, then there is a problem because education should be equal opportunity until College.
@@ -122,9 +123,11 @@ The first two graphs represent the four states that consistently ranked top 4 in
 
 ####Does the total revenue for education follow the year? (i.e Does the year matter?)
 
-####Importance: From 1993 to 2016, the amount of money circulating in society has grown drastically. Based on this, it is important to know when tidying and organizing data if specific labels matter.
+####Importance: 
+From 1993 to 2016, the amount of money circulating in society has grown drastically. Based on this, it is important to know when tidying and organizing data if specific labels matter.
 
-####New tools used: permutation test
+####New tools used: 
+-permutation test
 
 ```{r}
 educationERIN <- read.csv("states_all.csv") %>%
@@ -215,9 +218,11 @@ From 1993 to 2016, there has been a vast change in the way the education system 
 
 ####Does the instruction revenue for education coincide with the year? (i.e Does the year matter?)
 
-####Importance: From 2002 to 2015, money has inflated and there is now drastically more money circulating in society. Based on this, it is important to know when tidying and organizing data if specific labels matter.
+####Importance: 
+From 2002 to 2015, money has inflated and there is now drastically more money circulating in society. Based on this, it is important to know when tidying and organizing data if specific labels matter.
 
-####New tools used: two-sample permutation test and quantiles
+####New tools used: 
+-two-sample permutation test and quantiles
 
 ```{r}
 dataRichard2002 <- education %>%
@@ -229,7 +234,6 @@ dataRichard2015 <- education %>%
   summarise(mean = mean(INSTRUCTION_EXPENDITURE))
 
 Difference_In_Expenditure = dataRichard2015 - dataRichard2002
-Difference_In_Expenditure
 
 Education_group <- education %>%
   filter(YEAR == 2002 | YEAR == 2015)
@@ -274,7 +278,7 @@ EducationMean <- perm_mean(1000, Education_group$INSTRUCTION_EXPENDITURE, 100)
 hist(EducationMean, col = "green", main = "Difference of Means")
 
 duration = EducationMean
-quantile(duration, c(0.05, 0.95))
+
 
 ggplot()+
   geom_histogram(aes(x=EducationMean), bins = 100,fill = "Red")+
@@ -285,7 +289,7 @@ ggplot()+
 
 Richardeducation <- sum(EducationMean<250000)
 percentilesRichard <- Richardeducation/1000
-percentilesRichard
+
 ```
 ```{r echo = FALSE, results = 'asis'}
 library(knitr)
@@ -299,11 +303,14 @@ kable(percentilesRichard, caption = "The percentiles of difference in means")
 ####Comments
 The educational infrastructure in today's society has proven to be dynamic and adaptive. In the United States, there is more money being circulated than ever before, there are more kids being enrolled in school, and there are more ways states around the nation are paying their educational systems. I performed a two-sample permutation test with regards to the mean of instruction expenditure between the two years 2002 and 2015. From my graph above, the instructional revenue between years has slowly increased with minimal states with vast variations. Through the permutation test, I found a percentile difference to contain roughly 31.6 percent of the data. This number is a small proportion of the data, which means the years do matter when looking at instructional revenue from 2002 to 2015.The difference between 2002 and 2015 for total revenue is large due to inflation of the economy. Therefore, in conclusion, the amount of money fluctuating in the states has increased, leading to more money being spent on instructors in the education system which ultimately helps the success of the students (which probably explains why more students are enrolled than ever before). 
 
-###Jasmine's Findings:
-####Individual Question: 
-How does the percentage of student services expidentures allocated toward students relate to the numer of students enrolled over time in California? 
+###Jasmine's Findings
 
-####Why is it important?
+####How does the percentage of student services expidentures allocated toward students relate to the numer of students enrolled over time in California? 
+
+####New tools used:
+-mutation/group_by()
+
+####Importance:
 This is important to analyze within the education system because it is important to be aware of how these expenditures are supporting the needs of the students. Unfortunately, the majority of students who require extra support and assistance from schools, come from underrepresented communities. Therefore, in order to get a more accurate view of the effect that an increase in the Student Service Expenditures will have on student enrollment, I decided to focus directly on the state of California becuase they are one of the states with the most diverse population. 
 
 
@@ -385,4 +392,4 @@ Reflectin on my goal from the second lab of the semester, I think I have a much 
 
 
 ###Who Did What?
-Adam tidied the data and created a model and graph for the team section, and helped with conclusion and recommendation.  In his individual section he did exploratory data analysis on which states consistently generate the most revenue, and which generate the least.  He then compared these two groups in terms of school enrollment using data modeling, and graphs. Jasmine contributed to the team's recommendations and in her individual part, looked closesly at student services expenditures by year in the state of California. With that, she wanted to create a very diverse representative group of students and show how the increase in expenditures toward their support servies, has also shown an increase in student enrollment over the years. Richard made the overall format of the lab, found the domain expert, and wrote the importance of the lab. In Richard's individual section, he conducted a two-sample permutation test (along with quantiles) to see how instruction expenditure affected student enrollment nationwide. Using his data, Richard found that the United States has steadily been spending more and more on instruction (AKA teachers, tutors, etc.) which has subsequently increased student enrollment as well. 
+Adam tidied the data and created a model and graph for the team section, and helped with conclusion and recommendation.  In his individual section he did exploratory data analysis on which states consistently generate the most revenue, and which generate the least.  He then compared these two groups in terms of school enrollment using data modeling, and graphs. Jasmine contributed to the team's recommendations and in her individual part, looked closesly at student services expenditures by year in the state of California. With that, she wanted to create a very diverse representative group of students and show how the increase in expenditures toward their support servies, has also shown an increase in student enrollment over the years. Richard made the overall format of the lab, found the domain expert, and wrote the importance of the lab. In Richard's individual section, he conducted a two-sample permutation test (along with quantiles) to see how instruction expenditure affected student enrollment nationwide. Using his data, Richard found that the United States has steadily been spending more and more on instruction (AKA teachers, tutors, etc.) which has subsequently increased student enrollment as well. Erin organized the overall lab, but also included the new tools of permutation test to see if the labels have an impact on total revenue for education. She came to the conclusion that the labels do matter when investigating the data for the education system. 
