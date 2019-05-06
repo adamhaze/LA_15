@@ -349,7 +349,7 @@ ggplot(new, aes(YEAR, HELPED, colour = PERCENT)) +
 ```
 
 ####Comments: 
-The graph shown, displays the changes in the number of student enrolled in school in the state of California. The trend shows how the number of students, who utilize students services, who are enrolled in the school. The color, suggests how the percantage of the total number of enrolled students is changed and 
+The graph shown, displays the changes in the number of student enrolled in school in the state of California. The trend shows how the number of students, who utilize students services, who are enrolled in the school. The color displays the changes in percentage of allocation to Student Services, and the red line shows what the average trand looks like. This confirms my initial hypthesis of an increase in enrollment at schools who allocate a higher amount of their expenditures toward student services in order to better support the larger, representative groups, of the school. 
 
 
 ###Comparison to Lab 2
